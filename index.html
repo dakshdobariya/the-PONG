@@ -1,29 +1,45 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Simple Pong (Paddles & Ball)</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PONG — Home</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Simple Pong</h1>
-    <div id="scoreboard">
-      <span id="leftScore">0</span>
-      <span> — </span>
-      <span id="rightScore">0</span>
-    </div>
+<header class="nav">
+  <a class="logo" href="index.html">PONG<span>.</span></a>
+  <nav>
+    <a class="active" href="index.html">Home</a>
+    <a href="game.html">Play</a>
+    <a href="how-to-play.html">How to Play</a>
+  </nav>
+  <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">☾</button>
+</header>
 
-    <canvas id="game" width="800" height="500"></canvas>
-
-    <div class="controls">
-      <p>Control the left paddle with your mouse or the Up/Down arrow keys.</p>
-      <button id="resetBtn">Reset Scores</button>
-      <button id="pauseBtn">Pause</button>
-    </div>
+<main class="hero">
+  <div class="eyebrow">ARCADE / 01</div>
+  <h1>Classic game.<br><span>Modern arena.</span></h1>
+  <p class="lead">Your original Pong mechanics, rebuilt inside a premium multi-page arcade interface.</p>
+  <div class="hero-actions">
+    <a class="btn primary" href="game.html">Play Pong →</a>
+    <a class="btn ghost" href="how-to-play.html">How to Play</a>
   </div>
 
-  <script src="script.js"></script>
+  <section class="preview-card">
+    <div class="scanline"></div>
+    <div class="mini-paddle left"></div>
+    <div class="mini-ball"></div>
+    <div class="mini-paddle right"></div>
+    <div class="preview-score">00 <i>:</i> 00</div>
+  </section>
+
+  <section class="cards">
+    <article><b>01</b><h3>Classic mechanics</h3><p>Your mouse and arrow-key paddle controls stay intact.</p></article>
+    <article><b>02</b><h3>CPU opponent</h3><p>The original computer-controlled right paddle remains the opponent.</p></article>
+    <article><b>03</b><h3>Premium interface</h3><p>Three pages, responsive layout and persistent theme switching.</p></article>
+  </section>
+</main>
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,42 +1,118 @@
-/* Simple styling centered on the page */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(180deg,#222,#111);
-  color: #eee;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#07080b;--panel:#0e1015;--text:#f5f7fa;--muted:#9aa1ad;
+  --line:#252a34;--accent:#d9ff45;--canvas:#0b0d11;
+  --shadow:0 25px 80px rgba(0,0,0,.45)
 }
-.container {
-  text-align: center;
-  width: 860px;
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;background:radial-gradient(circle at 50% -10%,#1a1e27 0,#07080b 42%);
+  color:var(--text);font-family:Inter,Arial,sans-serif
 }
-h1 { margin-bottom: 6px; font-size: 20px; }
-#scoreboard {
-  margin-bottom: 12px;
-  font-size: 24px;
-  color: #ffd166;
+a{text-decoration:none;color:inherit}
+button{font:inherit}
+.nav{
+  height:76px;display:flex;align-items:center;justify-content:space-between;
+  max-width:1180px;margin:auto;padding:0 24px;border-bottom:1px solid var(--line)
 }
-canvas {
-  display: block;
-  background: #0b0b0b;
-  margin: 0 auto;
-  border: 2px solid #333;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+.logo{font-size:22px;font-weight:800;letter-spacing:-1px}.logo span{color:var(--accent)}
+nav{display:flex;gap:30px;color:var(--muted);font-size:14px}
+nav a{transition:.2s}nav a:hover,nav .active{color:var(--text)}
+.theme-btn{
+  border:1px solid var(--line);background:#101218;color:var(--text);
+  width:38px;height:38px;border-radius:50%;cursor:pointer
 }
-.controls {
-  margin-top: 10px;
-  color: #cfcfcf;
+.hero,.info-page,.game-page{max-width:1180px;margin:auto;padding:90px 24px}
+.hero{text-align:center}
+.eyebrow{font-size:11px;letter-spacing:3px;color:var(--accent);font-weight:700;margin-bottom:18px}
+.hero h1,.info-page h1{font-size:clamp(50px,8vw,94px);line-height:.95;letter-spacing:-5px}
+.hero h1 span{color:var(--muted)}
+.lead{max-width:650px;margin:28px auto;color:var(--muted);line-height:1.8;font-size:16px}
+.hero-actions{display:flex;justify-content:center;gap:12px;margin:32px 0 60px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  border:1px solid var(--line);padding:13px 20px;border-radius:10px;
+  font-weight:700;font-size:14px;cursor:pointer;transition:.2s
 }
-button {
-  background: #222;
-  color: #eee;
-  border: 1px solid #444;
-  padding: 6px 10px;
-  margin: 0 6px;
-  cursor: pointer;
-  border-radius: 4px;
+.primary{background:var(--accent);color:#090b0d;border-color:var(--accent)}
+.primary:hover{transform:translateY(-2px)}
+.ghost{background:#101218;color:var(--text)}.ghost:hover{background:#171a21}
+
+.preview-card{
+  height:360px;border:1px solid var(--line);border-radius:24px;background:#0b0d11;
+  position:relative;overflow:hidden;box-shadow:var(--shadow)
 }
-button:hover { border-color: #888; }
+.preview-card:before{
+  content:"";position:absolute;inset:20px;border:1px dashed #292e38;border-radius:16px
+}
+.scanline{position:absolute;left:50%;top:20px;bottom:20px;border-left:1px dashed #292e38}
+.mini-paddle{position:absolute;width:9px;height:85px;background:var(--text);border-radius:8px;top:138px}
+.mini-paddle.left{left:8%}.mini-paddle.right{right:8%}
+.mini-ball{
+  position:absolute;width:13px;height:13px;border-radius:50%;background:var(--accent);
+  left:50%;top:48%;box-shadow:0 0 25px var(--accent)
+}
+.preview-score{
+  position:absolute;top:34px;left:50%;transform:translateX(-50%);
+  font-size:38px;font-weight:800;letter-spacing:8px
+}
+.preview-score i{font-style:normal;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;text-align:left}
+.cards article,.guide{
+  border:1px solid var(--line);background:rgba(14,16,21,.75);
+  border-radius:16px;padding:25px
+}
+.cards b,.guide span{color:var(--accent);font-size:12px;letter-spacing:2px}
+.cards h3{margin:35px 0 10px}.cards p,.guide p{color:var(--muted);line-height:1.7;font-size:14px}
+
+.game-page{padding-top:50px}
+.game-top{display:flex;justify-content:space-between;align-items:end;margin-bottom:24px}
+.game-top h1{font-size:42px;letter-spacing:-2px}
+.status{font-size:11px;letter-spacing:2px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.status span:first-child{
+  width:7px;height:7px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 12px var(--accent)
+}
+.game-shell{
+  background:#0a0c10;border:1px solid var(--line);border-radius:24px;
+  padding:22px;box-shadow:var(--shadow)
+}
+.scoreboard{
+  display:flex;justify-content:center;align-items:center;gap:90px;
+  text-align:center;padding:8px 0 18px
+}
+.scoreboard small{display:block;color:var(--muted);font-size:10px;letter-spacing:2px}
+.scoreboard strong{font-size:52px;letter-spacing:-3px}.vs{color:#555d69;font-size:11px;font-weight:800}
+canvas{
+  width:100%;height:auto;display:block;background:var(--canvas);
+  border:1px solid #1d222c;border-radius:14px;cursor:none
+}
+.game-controls{display:flex;justify-content:center;gap:10px;margin:20px 0 10px}
+.hint{text-align:center;color:#646b77;font-size:11px}
+
+.info-page{max-width:1000px}.info-page h1{font-size:clamp(48px,7vw,78px)}
+.info-page>.lead{margin-left:0}.guide-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:45px 0
+}
+.guide h2{margin:28px 0 10px;font-size:25px}
+
+.light{
+  --bg:#f4f5f7;--panel:#fff;--text:#101217;--muted:#626977;
+  --line:#d9dce2;--canvas:#f8f9fa
+}
+.light body{background:#f4f5f7}
+.light .nav{border-color:var(--line)}
+.light .preview-card,.light .game-shell,.light .cards article,.light .guide{background:#fff}
+.light .theme-btn,.light .ghost{background:#fff;color:var(--text)}
+
+@media(max-width:700px){
+  nav{gap:12px;font-size:12px}.nav{padding:0 14px}
+  .hero,.info-page,.game-page{padding:55px 14px}
+  .hero h1,.info-page h1{letter-spacing:-3px}
+  .cards,.guide-grid{grid-template-columns:1fr}
+  .preview-card{height:260px}
+  .scoreboard{gap:35px}.scoreboard strong{font-size:40px}
+  .game-top h1{font-size:30px}.game-shell{padding:10px}
+}

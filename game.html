@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PONG — Play</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="index.html">PONG<span>.</span></a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a class="active" href="game.html">Play</a>
+    <a href="how-to-play.html">How to Play</a>
+  </nav>
+  <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">☾</button>
+</header>
+
+<main class="game-page">
+  <div class="game-top">
+    <div><div class="eyebrow">ARCADE / 02</div><h1>THE ARENA</h1></div>
+    <div class="status"><span id="statusDot"></span><span id="statusText">LIVE</span></div>
+  </div>
+
+  <section class="game-shell">
+    <div class="scoreboard">
+      <div><small>PLAYER</small><strong id="leftScore">0</strong></div>
+      <div class="vs">VS</div>
+      <div><small>CPU</small><strong id="rightScore">0</strong></div>
+    </div>
+
+    <canvas id="game" width="800" height="500"></canvas>
+
+    <div class="game-controls">
+      <button class="btn primary" id="resetBtn">Reset Scores</button>
+      <button class="btn ghost" id="pauseBtn">Pause</button>
+    </div>
+    <p class="hint">Mouse / ↑ ↓ &nbsp;•&nbsp; Space = Pause / Resume</p>
+  </section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
