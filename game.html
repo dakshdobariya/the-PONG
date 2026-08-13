@@ -3,10 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>PONG — Play</title>
+  <title>PONG — Neon Arena</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+
 <header class="nav">
   <a class="logo" href="index.html">PONG<span>.</span></a>
   <nav>
@@ -19,25 +21,52 @@
 
 <main class="game-page">
   <div class="game-top">
-    <div><div class="eyebrow">ARCADE / 02</div><h1>THE ARENA</h1></div>
-    <div class="status"><span id="statusDot"></span><span id="statusText">LIVE</span></div>
+    <div><div class="eyebrow">ARCADE / MATCH 01</div><h1>NEON ARENA</h1><div class="bot-badge">BOT DIFFICULTY: <b id="botBadge">MEDIUM</b></div></div>
+    <div class="status"><span id="statusDot"></span><span id="statusText">READY</span></div>
   </div>
 
-  <section class="game-shell">
-    <div class="scoreboard">
-      <div><small>PLAYER</small><strong id="leftScore">0</strong></div>
-      <div class="vs">VS</div>
-      <div><small>CPU</small><strong id="rightScore">0</strong></div>
+  <section class="hud-row">
+    <div class="hud-card"><span>PLAYER</span><strong id="leftScore">0</strong></div>
+    <div class="match-center">
+      <div class="round-label">FIRST TO 7</div>
+      <div class="round-track"><span id="roundFill"></span></div>
+      <div class="rally">RALLY <b id="rallyCount">0</b></div>
     </div>
-
-    <canvas id="game" width="800" height="500"></canvas>
-
-    <div class="game-controls">
-      <button class="btn primary" id="resetBtn">Reset Scores</button>
-      <button class="btn ghost" id="pauseBtn">Pause</button>
-    </div>
-    <p class="hint">Mouse / ↑ ↓ &nbsp;•&nbsp; Space = Pause / Resume</p>
+    <div class="hud-card cpu"><span>CPU</span><strong id="rightScore">0</strong></div>
   </section>
+
+  <section class="game-shell" id="gameShell">
+    <div class="arena-tag">PONG // ONLINE</div>
+    <div class="countdown" id="countdown"></div>
+    <canvas id="game" width="1000" height="600"></canvas>
+    <div class="center-message" id="centerMessage">CLICK START TO ENTER</div>
+  </section>
+
+  <div class="game-controls">
+    <label class="difficulty-control">
+      <span>BOT</span>
+      <select id="difficultySelect" aria-label="Bot difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium" selected>Medium</option>
+        <option value="hard">Hard</option>
+        <option value="god">God</option>
+      </select>
+    </label>
+    <button class="btn primary" id="startBtn">Start Match</button>
+    <button class="btn ghost" id="pauseBtn">Pause</button>
+    <button class="btn ghost" id="resetBtn">Reset</button>
+    <button class="btn ghost" id="soundBtn">Sound: On</button>
+  </div>
+  <p class="hint">Mouse / ↑ ↓ / W S &nbsp;•&nbsp; Space = Pause &nbsp;•&nbsp; First to 7 wins</p>
+
+  <div class="result-overlay" id="resultOverlay">
+    <div class="result-card">
+      <div class="eyebrow">MATCH COMPLETE</div>
+      <h2 id="resultTitle">YOU WIN</h2>
+      <p id="resultScore">7 — 4</p>
+      <button class="btn primary" id="playAgainBtn">Play Again →</button>
+    </div>
+  </div>
 </main>
 <script src="script.js"></script>
 </body>
