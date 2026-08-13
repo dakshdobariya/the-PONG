@@ -127,12 +127,6 @@ Depending on the current implementation, the main technologies can include:
 You can play the game online here:
 
  !! https://dakshdobariya.github.io/the-PONG/ !!
- 
-Example:
-
-```text
-https://YOUR_USERNAME.github.io/YOUR_REPOSITORY/
-```
 
 ## 📌 Project Status
 
