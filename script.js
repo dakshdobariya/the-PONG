@@ -11,7 +11,11 @@ const W=canvas.width,H=canvas.height;
 const scoreL=document.getElementById('leftScore'),scoreR=document.getElementById('rightScore');
 const resetBtn=document.getElementById('resetBtn'),pauseBtn=document.getElementById('pauseBtn'),startBtn=document.getElementById('startBtn');
 const soundBtn=document.getElementById('soundBtn'),countdownEl=document.getElementById('countdown');
-const difficultySelect=document.getElementById('difficultySelect');
+const difficultyControl=document.getElementById('difficultyControl');
+const difficultyTrigger=document.getElementById('difficultyTrigger');
+const difficultyValue=document.getElementById('difficultyValue');
+const difficultyMenu=document.getElementById('difficultyMenu');
+const difficultyOptions=difficultyMenu?difficultyMenu.querySelectorAll('[data-difficulty]'):[];
 const botBadge=document.getElementById('botBadge');
 const statusText=document.getElementById('statusText'),roundFill=document.getElementById('roundFill'),rallyEl=document.getElementById('rallyCount');
 const centerMessage=document.getElementById('centerMessage'),shell=document.getElementById('gameShell');
@@ -112,14 +116,33 @@ pauseBtn.onclick=togglePause;
 resetBtn.onclick=()=>resetMatch(true);
 playAgainBtn.onclick=()=>resetMatch(true);
 soundBtn.onclick=()=>{soundOn=!soundOn;soundBtn.textContent='Sound: '+(soundOn?'On':'Off');if(soundOn)beep(600,.05)};
-difficultySelect.addEventListener('change',()=>{
-  difficulty=difficultySelect.value;
-  if(running && !gameOver){
-    status(difficulty.toUpperCase()+' BOT');
+difficulty='medium';
+if(botBadge) botBadge.textContent=difficulty.toUpperCase();
+
+function setDifficulty(level){
+  difficulty=level;
+  if(difficultyValue) difficultyValue.textContent=level.charAt(0).toUpperCase()+level.slice(1);
+  if(botBadge) botBadge.textContent=level.toUpperCase();
+  difficultyOptions.forEach(btn=>btn.classList.toggle('selected',btn.dataset.difficulty===level));
+  if(difficultyControl) difficultyControl.classList.remove('open');
+  if(difficultyTrigger) difficultyTrigger.setAttribute('aria-expanded','false');
+  if(running && !gameOver) status(level.toUpperCase()+' BOT');
+}
+if(difficultyTrigger){
+  difficultyTrigger.addEventListener('click',e=>{
+    e.stopPropagation();
+    const open=difficultyControl.classList.toggle('open');
+    difficultyTrigger.setAttribute('aria-expanded',open?'true':'false');
+  });
+}
+difficultyOptions.forEach(btn=>btn.addEventListener('click',()=>setDifficulty(btn.dataset.difficulty)));
+document.addEventListener('click',e=>{
+  if(difficultyControl && !difficultyControl.contains(e.target)){
+    difficultyControl.classList.remove('open');
+    if(difficultyTrigger) difficultyTrigger.setAttribute('aria-expanded','false');
   }
 });
-difficulty=difficultySelect.value;
-if(botBadge) botBadge.textContent=difficulty.toUpperCase();
-difficultySelect.addEventListener('change',()=>{difficulty=difficultySelect.value;if(botBadge)botBadge.textContent=difficulty.toUpperCase();status(difficulty.toUpperCase()+' BOT')});
+setDifficulty('medium');
+
 resetMatch(false);requestAnimationFrame(loop);
 }

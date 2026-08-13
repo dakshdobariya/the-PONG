@@ -43,15 +43,18 @@
   </section>
 
   <div class="game-controls">
-    <label class="difficulty-control">
+    <div class="difficulty-control" id="difficultyControl">
       <span>BOT</span>
-      <select id="difficultySelect" aria-label="Bot difficulty">
-        <option value="easy">Easy</option>
-        <option value="medium" selected>Medium</option>
-        <option value="hard">Hard</option>
-        <option value="god">God</option>
-      </select>
-    </label>
+      <button class="difficulty-trigger" id="difficultyTrigger" type="button" aria-expanded="false">
+        <span id="difficultyValue">Medium</span><span class="difficulty-chevron">⌄</span>
+      </button>
+      <div class="difficulty-menu" id="difficultyMenu">
+        <button type="button" data-difficulty="easy">Easy</button>
+        <button type="button" data-difficulty="medium" class="selected">Medium</button>
+        <button type="button" data-difficulty="hard">Hard</button>
+        <button type="button" data-difficulty="god">God</button>
+      </div>
+    </div>
     <button class="btn primary" id="startBtn">Start Match</button>
     <button class="btn ghost" id="pauseBtn">Pause</button>
     <button class="btn ghost" id="resetBtn">Reset</button>

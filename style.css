@@ -71,3 +71,47 @@ canvas{width:100%;height:auto;display:block;background:#05080b;border:1px solid 
 .bot-badge{display:inline-block;margin-top:10px;padding:6px 9px;border:1px solid var(--line);border-radius:7px;background:#0b0f14;color:#68717e;font-size:9px;letter-spacing:1.5px}
 .bot-badge b{color:var(--accent)}
 .light .bot-badge{background:#fff}
+
+/* Custom neon bot selector */
+.difficulty-control{
+  position:relative;display:flex;align-items:center;gap:8px;
+  border:1px solid var(--line);background:#0c1016;border-radius:10px;
+  padding:0 10px 0 12px;min-height:44px;z-index:30
+}
+.difficulty-control>span:first-child{
+  font-size:9px;font-weight:800;letter-spacing:2px;color:#737d8a
+}
+.difficulty-trigger{
+  min-width:105px;display:flex;align-items:center;justify-content:space-between;
+  gap:14px;border:0;outline:0;background:transparent;color:var(--text);
+  font-weight:800;font-size:12px;padding:10px 2px;cursor:pointer
+}
+.difficulty-chevron{font-size:15px;color:#7d8795;transition:.2s}
+.difficulty-control.open .difficulty-chevron{transform:rotate(180deg);color:var(--accent)}
+.difficulty-menu{
+  position:absolute;left:0;right:0;top:calc(100% + 7px);padding:6px;
+  background:#090d13;border:1px solid #303947;border-radius:12px;
+  box-shadow:0 18px 45px rgba(0,0,0,.55);opacity:0;transform:translateY(-5px);
+  pointer-events:none;transition:.16s;overflow:hidden
+}
+.difficulty-control.open .difficulty-menu{opacity:1;transform:translateY(0);pointer-events:auto}
+.difficulty-menu button{
+  width:100%;border:0;background:transparent;color:#9aa4b2;text-align:left;
+  padding:10px 11px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;
+  transition:.15s
+}
+.difficulty-menu button:hover{background:#151c25;color:var(--text)}
+.difficulty-menu button.selected{
+  background:rgba(215,255,66,.1);color:var(--accent);
+  box-shadow:inset 2px 0 0 var(--accent)
+}
+.difficulty-menu button[data-difficulty="easy"].selected{color:#75e6a5}
+.difficulty-menu button[data-difficulty="hard"].selected{color:#ffb65c}
+.difficulty-menu button[data-difficulty="god"].selected{color:#ff6d91}
+.light .difficulty-control{background:#fff}
+.light .difficulty-menu{background:#fff;border-color:#d9dce2;box-shadow:0 18px 45px rgba(0,0,0,.15)}
+.light .difficulty-menu button{color:#626977}
+.light .difficulty-menu button:hover{background:#f1f3f6;color:#101217}
+@media(max-width:760px){
+  .difficulty-trigger{min-width:90px}
+}
