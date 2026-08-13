@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Simple Pong (Paddles & Ball)</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Simple Pong</h1>
+    <div id="scoreboard">
+      <span id="leftScore">0</span>
+      <span> — </span>
+      <span id="rightScore">0</span>
+    </div>
+
+    <canvas id="game" width="800" height="500"></canvas>
+
+    <div class="controls">
+      <p>Control the left paddle with your mouse or the Up/Down arrow keys.</p>
+      <button id="resetBtn">Reset Scores</button>
+      <button id="pauseBtn">Pause</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
