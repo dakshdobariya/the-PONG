@@ -126,8 +126,8 @@ Depending on the current implementation, the main technologies can include:
 
 You can play the game online here:
 
-**[Add your GitHub Pages link here]**
-
+ !! https://dakshdobariya.github.io/the-PONG/ !!
+ 
 Example:
 
 ```text
