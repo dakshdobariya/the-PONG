@@ -1,6 +1,10 @@
 const canvas = document.getElementById('pongCanvas') || document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
+// Ensure Canvas is focusable for Key Events
+canvas.tabIndex = 1;
+canvas.focus();
+
 // Canvas Dimensions Setup
 canvas.width = canvas.clientWidth || 800;
 canvas.height = canvas.clientHeight || 500;
@@ -19,7 +23,7 @@ const p1 = {
     y: canvas.height / 2 - 45, 
     w: paddleWidth, 
     h: paddleHeight, 
-    color: '#ccff00', // Lime Green Glow
+    color: '#ccff00', 
     speed: 8 
 };
 
@@ -28,7 +32,7 @@ const p2 = {
     y: canvas.height / 2 - 45, 
     w: paddleWidth, 
     h: paddleHeight, 
-    color: '#00f3ff', // Cyan Glow
+    color: '#00f3ff', 
     speed: 8 
 };
 
@@ -62,10 +66,31 @@ function createParticles(x, y, color) {
     }
 }
 
-// Controls Handling
+// Global Robust Keyboard Event Listener
 const keys = {};
-window.addEventListener('keydown', e => keys[e.key] = true);
-window.addEventListener('keyup', e => keys[e.key] = false);
+
+window.addEventListener('keydown', (e) => {
+    keys[e.key.toLowerCase()] = true;
+    keys[e.code] = true;
+    // Prevent Arrow keys from scrolling the webpage
+    if (['ArrowUp', 'ArrowDown', 'Space', 'KeyW', 'KeyS'].includes(e.code)) {
+        e.preventDefault();
+    }
+});
+
+window.addEventListener('keyup', (e) => {
+    keys[e.key.toLowerCase()] = false;
+    keys[e.code] = false;
+});
+
+// Mouse / Touch Controls Fallback for Player 1
+window.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const mouseY = e.clientY - rect.top;
+    if (mouseY >= 0 && mouseY <= canvas.height) {
+        p1.y = mouseY - p1.h / 2;
+    }
+});
 
 function resetBall(winner) {
     ball.x = canvas.width / 2;
@@ -78,17 +103,17 @@ function resetBall(winner) {
 }
 
 function update() {
-    // Player 1 Movement (W / S)
-    if (keys['w'] || keys['W']) p1.y -= p1.speed;
-    if (keys['s'] || keys['S']) p1.y += p1.speed;
+    // Player 1 Movement (Keyboard W / S)
+    if (keys['w'] || keys['KeyW']) p1.y -= p1.speed;
+    if (keys['s'] || keys['KeyS']) p1.y += p1.speed;
 
-    // Player 2 Movement (Arrow Keys or Adaptive AI)
-    if (keys['ArrowUp']) {
+    // Player 2 Movement (Arrow Keys or Auto-AI)
+    if (keys['arrowup'] || keys['ArrowUp']) {
         p2.y -= p2.speed;
-    } else if (keys['ArrowDown']) {
+    } else if (keys['arrowdown'] || keys['ArrowDown']) {
         p2.y += p2.speed;
     } else {
-        // AI Logic
+        // Adaptive AI Tracking
         let target = ball.y - (p2.h / 2);
         p2.y += (target - p2.y) * 0.09;
     }
@@ -154,25 +179,21 @@ function collision(b, p) {
 
 // Deep Space Cyber Nebulae Background
 function drawDeepSpaceBackground() {
-    // 1. Dark Space Base
     ctx.fillStyle = '#030407';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 2. Left Player Glow (Lime Green Nebula Effect)
     let leftGlow = ctx.createRadialGradient(0, canvas.height / 2, 10, 0, canvas.height / 2, canvas.width * 0.5);
     leftGlow.addColorStop(0, 'rgba(204, 255, 0, 0.15)');
     leftGlow.addColorStop(1, 'transparent');
     ctx.fillStyle = leftGlow;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 3. Right Player Glow (Cyan Nebula Effect)
     let rightGlow = ctx.createRadialGradient(canvas.width, canvas.height / 2, 10, canvas.width, canvas.height / 2, canvas.width * 0.5);
     rightGlow.addColorStop(0, 'rgba(0, 243, 255, 0.15)');
     rightGlow.addColorStop(1, 'transparent');
     ctx.fillStyle = rightGlow;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 4. Center Dashed Line
     ctx.setLineDash([8, 8]);
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
     ctx.lineWidth = 2;
@@ -182,7 +203,6 @@ function drawDeepSpaceBackground() {
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // 5. Center Field Ring
     ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
     ctx.lineWidth = 2;
     ctx.beginPath();
@@ -193,17 +213,14 @@ function drawDeepSpaceBackground() {
 function draw() {
     ctx.save();
 
-    // Screen Shake Effect
     if (shakeTime > 0) {
         let dx = (Math.random() - 0.5) * 6;
         let dy = (Math.random() - 0.5) * 6;
         ctx.translate(dx, dy);
     }
 
-    // Draw Deep Space Background
     drawDeepSpaceBackground();
 
-    // Draw Ball Trail
     ball.trail.forEach((t, i) => {
         ctx.beginPath();
         ctx.arc(t.x, t.y, ball.radius * (i / ball.trail.length), 0, Math.PI * 2);
@@ -211,7 +228,6 @@ function draw() {
         ctx.fill();
     });
 
-    // Draw Glowing Ball
     ctx.beginPath();
     ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
     ctx.fillStyle = '#ffffff';
@@ -220,7 +236,6 @@ function draw() {
     ctx.fill();
     ctx.shadowBlur = 0;
 
-    // Draw Paddles
     [p1, p2].forEach(p => {
         ctx.fillStyle = p.color;
         ctx.shadowBlur = 18;
@@ -229,7 +244,6 @@ function draw() {
         ctx.shadowBlur = 0;
     });
 
-    // Draw FX Particles
     particles.forEach(p => {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
@@ -248,5 +262,4 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-// Start Game Engine
 gameLoop();
